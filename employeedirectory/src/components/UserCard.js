@@ -2,14 +2,17 @@ const UserCard = props => {
     return (
         <div className="card">
             <div className="card-image">
-                <img src={props.user.picture.medium} alt="user" />
+                <img 
+                src={props.img} 
+                alt="user" 
+                />
                 <span className="card-title">
-                    {props.user.name.title}. {props.user.name.first} {props.user.name.last}
+                    {props.title} {props.firstName} {props.lastName}
                 </span>
             </div>
             <div className="card-content">
-                <p>Phone: {props.user.phone}</p>
-                <p>E-mail: {props.user.email}</p>
+                <p>Phone: {props.phone}</p>
+                <p>E-mail: {props.email}</p>
             </div>
         </div>
     );
