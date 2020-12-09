@@ -9,10 +9,12 @@ import Col from "./Col";
 // import FilterCard from "./FilterCard";
 import SortCollection from "./SortCollection";
 import EmployeeCard from "./EmployeeCard";
+import FilterCollection from "./FilterCard";
 
 class Directory extends Component {
     state = {
-        employees: []
+        employees: [],
+        filteredEmployees: []
     };
 
     componentDidMount() {
@@ -20,7 +22,10 @@ class Directory extends Component {
             .getEmployees(25)
             .then(res => { 
                 // console.log("res, res.data", res, res.data);
-                this.setState({ employees: res.data.results });
+                this.setState({
+                    employees: res.data.results,
+                    filteredEmployees: res.data.results
+                });
             })
             .catch(err => console.log(err));
     };
@@ -41,17 +46,17 @@ class Directory extends Component {
     //     this.setState({ employees: filteredEmployees });
     // }
 
-    // filterByGender = gender => {
-    //     const filteredEmployees = this.state.employees.filter(employee => {
-    //         if (employee.gender === gender) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     });
+    filterByGender = gender => {
+        const filteredEmployees = this.state.employees.filter(employee => {
+            if (employee.gender === gender) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
-    //     this.setState({ employees: filteredEmployees })
-    // }
+        this.setState({ filteredEmployees })
+    }
 
     sortAsc = () => {
         const ascEmployees = this.state.employees.sort((a, b) => {
@@ -64,7 +69,7 @@ class Directory extends Component {
             return 0;
         });
 
-        this.setState({ employees: ascEmployees });
+        this.setState({ filteredEmployees: ascEmployees });
     };
 
     sortDesc = () => {
@@ -78,12 +83,12 @@ class Directory extends Component {
             return 0;
         });
 
-        this.setState({ employees: descEmployees });
+        this.setState({ filteredEmployees: descEmployees });
     };
 
     render() {
-        const { employees } = this.state;
-        console.log("employees from render() in Directory", employees);
+        const employees = this.state.filteredEmployees;
+        // console.log("employees from render() in Directory", employees);
         return (
             
                 <Container>
@@ -94,16 +99,15 @@ class Directory extends Component {
                                 sortDesc={this.sortDesc}
                             />
                         </Col>
-                            {/* <Col size="s12 m4 l3">
-                                <FilterCard 
-                                    filterByGender={this.filterByGender}
-                                    filterByNat={this.filterByNat}
-                                />
-                            </Col> */}
+                        <Col size="s12 m4 l3">
+                            <FilterCollection 
+                                filterByGender={this.filterByGender}
+                            />
+                        </Col>
                     </Row>
                     
                     <Row>
-                        {this.state.employees.map((employee) => (
+                        {employees.map((employee) => (
                             <Col size="s12 m4" key={employee.login.uuid}>
                                 <EmployeeCard 
                                 title={employee.name.title}
@@ -118,7 +122,6 @@ class Directory extends Component {
                             </Col>
                         ))}
                     </Row>
-                    
                 </Container>
             
         )
