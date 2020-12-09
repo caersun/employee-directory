@@ -1,4 +1,4 @@
-const UserCard = props => {
+const EmployeeCard = props => {
     return (
         <div className="card">
             <div className="card-image">
@@ -7,7 +7,7 @@ const UserCard = props => {
                 alt="user" 
                 />
                 <span className="card-title">
-                    {props.title} {props.firstName} {props.lastName}
+                    {props.firstName} {props.lastName}
                 </span>
             </div>
             <div className="card-content">
@@ -17,4 +17,4 @@ const UserCard = props => {
         </div>
     );
 }
-export default UserCard;
+export default EmployeeCard;

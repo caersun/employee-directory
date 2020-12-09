@@ -3,7 +3,7 @@ import axios from "axios";
 const URL = "https://randomuser.me/api/?results=";
 
 const API = {
-    getUsers: (num) => {
+    getEmployees: (num) => {
         return axios.get(URL + num);
     }
 };
